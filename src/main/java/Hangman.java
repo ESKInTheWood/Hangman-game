@@ -48,7 +48,7 @@ public class Hangman {
         String tempLetter = Character.toString(letter);
 
         for (int i = 0; i < searchedWord.length(); i++) {
-            if (Character.isDigit(letter)) {
+            if (!Character.isLetter(letter)) {
                 lives--;
                 foundLetter = false;
                 throw new NotALetterException("This is not a letter. Try again");
