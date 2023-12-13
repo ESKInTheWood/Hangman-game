@@ -6,11 +6,10 @@ public class Hangman {
     char[] userWord;
     int lives = 8;
     String letter;
+    Scanner scanner;
 
     public void play() {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-        searchedWord = words.get(random.nextInt(words.size()));
+        searchedWord = getRandomWord();
 
         userWord = new char[searchedWord.length()]; //tablica o długości wylosowanego słowa
         Arrays.fill(userWord, '_');
@@ -23,7 +22,7 @@ public class Hangman {
                 System.out.println("Remaining lives: " + lives);
                 System.out.println("Enter another letter: ");
 
-                letter = scanner.next().toLowerCase();
+                letter = getUserInput();
                 checkLetter(letter);
             } catch (NotALetterException ex) {
                 System.out.println(ex.getMessage());
@@ -38,7 +37,15 @@ public class Hangman {
         }
 
         scanner.close();
+    }
 
+    private String getUserInput(){
+        return new Scanner(System.in).next().toLowerCase();
+    }
+
+    private String getRandomWord(){
+        Random random = new Random();
+        return words.get(random.nextInt(words.size()));
     }
 
     private void checkLetter(String letter) throws NotALetterException {
