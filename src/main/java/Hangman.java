@@ -24,7 +24,7 @@ public class Hangman {
 
                 char letter = scanner.next().toLowerCase().charAt(0);
                 checkLetter(letter);
-            } catch (NotALetter ex) {
+            } catch (NotALetterException ex) {
                 System.out.println(ex.getMessage());
                 ex.getStackTrace();
             }
@@ -40,7 +40,7 @@ public class Hangman {
 
     }
 
-    private void checkLetter(char letter) throws NotALetter {
+    private void checkLetter(char letter) throws NotALetterException {
         /* sprawdzamy czy litera istnieje w wylosowanym słowie,
         jesli tak uzupełnimy tablicę userWord o te literę dokładnie pod wskazanym indeksem*/
 
@@ -51,7 +51,7 @@ public class Hangman {
             if (Character.isDigit(letter)) {
                 lives--;
                 foundLetter = false;
-                throw new NotALetter("This is not a letter. Try again");
+                throw new NotALetterException("This is not a letter. Try again");
 
             }else {
                 if (searchedWord.charAt(i) == letter) {
