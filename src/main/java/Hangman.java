@@ -20,7 +20,7 @@ public class Hangman {
                 System.out.println(userWord);
                 System.out.println();
                 System.out.println("Remaining lives: " + lives);
-                System.out.println("Enter another letter: ");
+                System.out.println("Enter letter: ");
 
                 letter = getUserInput();
                 checkLetter(letter);
@@ -56,13 +56,11 @@ public class Hangman {
         char singleLetter = letter.charAt(0);
 
         for (int i = 0; i < searchedWord.length(); i++) {
-            if (letter.length() > 1 || letter.length() == 0) {
+            if (letter.length() > 1) {
                 lives--;
-                foundLetter = false;
                 throw new NotALetterException("This is not a single letter. Try again");
             }else if (!Character.isLetter(singleLetter)) {
                 lives--;
-                foundLetter = false;
                 throw new NotALetterException("This is not a letter. Try again");
             }else {
                 if (searchedWord.charAt(i) == singleLetter) {
