@@ -5,6 +5,7 @@ public class Hangman {
     String searchedWord;
     char[] userWord;
     int lives = 8;
+    String letter;
 
     public void play() {
         Scanner scanner = new Scanner(System.in);
@@ -22,7 +23,7 @@ public class Hangman {
                 System.out.println("Remaining lives: " + lives);
                 System.out.println("Enter another letter: ");
 
-                char letter = scanner.next().toLowerCase().charAt(0);
+                letter = scanner.next().toLowerCase();
                 checkLetter(letter);
             } catch (NotALetterException ex) {
                 System.out.println(ex.getMessage());
@@ -40,22 +41,25 @@ public class Hangman {
 
     }
 
-    private void checkLetter(char letter) throws NotALetterException {
+    private void checkLetter(String letter) throws NotALetterException {
         /* sprawdzamy czy litera istnieje w wylosowanym słowie,
         jesli tak uzupełnimy tablicę userWord o te literę dokładnie pod wskazanym indeksem*/
 
         boolean foundLetter = false;
-        String tempLetter = Character.toString(letter);
+        char singleLetter = letter.charAt(0);
 
         for (int i = 0; i < searchedWord.length(); i++) {
-            if (!Character.isLetter(letter)) {
+            if (letter.length() > 1 || letter.length() == 0) {
+                lives--;
+                foundLetter = false;
+                throw new NotALetterException("This is not a single letter. Try again");
+            }else if (!Character.isLetter(singleLetter)) {
                 lives--;
                 foundLetter = false;
                 throw new NotALetterException("This is not a letter. Try again");
-
             }else {
-                if (searchedWord.charAt(i) == letter) {
-                    userWord[i] = letter;
+                if (searchedWord.charAt(i) == singleLetter) {
+                    userWord[i] = singleLetter;
                     foundLetter = true;
                 }
             }
