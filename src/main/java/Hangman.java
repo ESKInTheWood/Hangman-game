@@ -1,18 +1,13 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Hangman {
-    List<String> words = List.of("programmin", "aplication", "christmas", "story", "party");
+    List<String> words = List.of("hogwart", "hedwiga", "zgredek", "dobby", "ron", "harry", "dumbledore", "voldemort");
     String searchedWord;
     char[] userWord;
-    int lives = 3;
+    int lives = 8;
 
-    public void play(){
+    public void play() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Game start:");
-
         Random random = new Random();
         searchedWord = words.get(random.nextInt(words.size()));
 
@@ -20,18 +15,22 @@ public class Hangman {
         Arrays.fill(userWord, '_');
 
         while (!gameEnded()) {
-            System.out.println(userWord);
-            System.out.println();
-            System.out.println("Enter another letter: ");
-            System.out.println("Remaining lives: " + lives);
+            try {
+                System.out.println("Drawn word:");
+                System.out.println(userWord);
+                System.out.println();
+                System.out.println("Remaining lives: " + lives);
+                System.out.println("Enter another letter: ");
 
-            char letter = scanner.nextLine().charAt(0); //póki co zakładamy, że użytkownik poda tylko jedną literę
-
-            checkLetter(letter);
-
+                char letter = scanner.next().toLowerCase().charAt(0);
+                checkLetter(letter);
+            } catch (NotALetter ex) {
+                System.out.println(ex.getMessage());
+                ex.getStackTrace();
+            }
         }
 
-        if (lives == 0){
+        if (lives == 0) {
             System.out.println("Unfortunately, you didn't win.");
         } else {
             System.out.println("Bravo! You have successfully guessed the drawn word!");
@@ -41,25 +40,38 @@ public class Hangman {
 
     }
 
-    private void checkLetter(char letter) {
+    private void checkLetter(char letter) throws NotALetter {
         /* sprawdzamy czy litera istnieje w wylosowanym słowie,
         jesli tak uzupełnimy tablicę userWord o te literę dokładnie pod wskazanym indeksem*/
 
         boolean foundLetter = false;
+        String tempLetter = Character.toString(letter);
 
-        for (int i = 0; i<searchedWord.length(); i++){
-            if (searchedWord.charAt(i) == letter){
-                userWord[i] = letter;
-                foundLetter = true;
+        for (int i = 0; i < searchedWord.length(); i++) {
+            if (Character.isDigit(letter)) {
+                lives--;
+                foundLetter = false;
+                throw new NotALetter("This is not a letter. Try again");
+
+            }else {
+                if (searchedWord.charAt(i) == letter) {
+                    userWord[i] = letter;
+                    foundLetter = true;
+                }
             }
         }
-        if(!foundLetter){
+
+        if (!foundLetter) {
             System.out.println("Unfortunately, there is no such letter.");
-            lives --;
+            lives--;
         }
     }
 
-    private boolean gameEnded() {
+    private boolean gameEnded () {
         return lives == 0 || searchedWord.equals(String.valueOf(userWord));
     }
 }
+
+
+
+
