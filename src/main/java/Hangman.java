@@ -4,12 +4,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Hangman {
-    List<String> words = Arrays.asList("hogwart", "hedwiga", "zgredek", "dobby", "ron", "harry", "dumbledore", "voldemort");
-    String searchedWord;
-    char[] userWord;
-    int lives = 8;
-    String letter;
-    Scanner scanner;
+    private List<String> words = Arrays.asList("hogwart", "hedwiga", "zgredek", "dobby", "ron", "harry", "dumbledore", "voldemort");
+    private String searchedWord;
+    private char[] userWord;
+    private int lives = 8;
+    private String letter;
 
     public void play() {
         searchedWord = getRandomWord();
@@ -38,8 +37,6 @@ public class Hangman {
         } else {
             System.out.println("Bravo! You have successfully guessed the drawn word!");
         }
-
-        scanner.close();
     }
 
     private String getUserInput(){
