@@ -1,7 +1,10 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Hangman {
-    List<String> words = List.of("hogwart", "hedwiga", "zgredek", "dobby", "ron", "harry", "dumbledore", "voldemort");
+    List<String> words = Arrays.asList("hogwart", "hedwiga", "zgredek", "dobby", "ron", "harry", "dumbledore", "voldemort");
     String searchedWord;
     char[] userWord;
     int lives = 8;
