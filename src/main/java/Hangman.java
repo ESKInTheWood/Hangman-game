@@ -9,6 +9,7 @@ public class Hangman {
     private char[] userWord;
     private int lives = 8;
     private String letter;
+    Scanner scanner = new Scanner(System.in);
 
     public void play() {
         searchedWord = getRandomWord();
@@ -37,13 +38,15 @@ public class Hangman {
         } else {
             System.out.println("Bravo! You have successfully guessed the drawn word!");
         }
+        scanner.close();
     }
 
-    private String getUserInput(){
+    public String getUserInput(){
+
         return new Scanner(System.in).next().toLowerCase();
     }
 
-    private String getRandomWord(){
+    public String getRandomWord(){
         Random random = new Random();
         return words.get(random.nextInt(words.size()));
     }
